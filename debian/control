@@ -1,0 +1,23 @@
+Source: overlayroot
+Section: admin
+Priority: optional
+Maintainer: Uri Herrera <uri_herrera@nxos.org>
+Build-Depends: debhelper (>=9)
+Standards-Version: 3.9.6
+Homepage: http://launchpad.net/cloud-initramfs-tools
+
+
+Package: overlayroot
+Architecture: all
+Depends: cryptsetup, cryptsetup-bin, initramfs-tools
+Suggests: haveged
+Description: use an overlayfs on top of a read-only root filesystem
+ This package adds functionality to an initramfs built by initramfs-tools.
+ When installed and configured, the initramfs will mount an overlayfs
+ filesystem on top of a read-only root volume.
+ .
+ The changes can be written to a in-memory temporary filesystem, a
+ filesystem on an existing block device, or a dmcrypt encrypted block
+ device.
+ .
+ This package has been modified for Nitrux OS.
