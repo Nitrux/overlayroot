@@ -1,4 +1,4 @@
-Source: overlayroot
+Source: nx-overlayroot
 Section: admin
 Priority: optional
 Maintainer: Uri Herrera <uri_herrera@nxos.org>
