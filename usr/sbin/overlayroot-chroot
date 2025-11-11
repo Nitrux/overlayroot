@@ -2,8 +2,10 @@
 #
 #    overlayroot-chroot - chroot wrapper script for overlayroot
 #    Copyright (C) 2012 Dustin Kirkland <kirkland@ubuntu.com>
+#    Copyright (C) 2025 Uri Herrera <uri_herrera@nxos.org>
 #
 #    Authors: Dustin Kirkland <kirkland@ubuntu.com>
+#    Authors: Uri Herrera <uri_herrera@nxos.org>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
