@@ -11,7 +11,7 @@ Package: nx-overlayroot
 Architecture: all
 Depends: cryptsetup, cryptsetup-bin, initramfs-tools
 Suggests: haveged
-Replaces: overlayroot
+Provides: overlayroot
 Description: use an overlayfs on top of a read-only root filesystem
  This package adds functionality to an initramfs built by initramfs-tools.
  When installed and configured, the initramfs will mount an overlayfs
