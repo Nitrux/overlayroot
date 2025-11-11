@@ -17,6 +17,15 @@ Files: overlayroot/scripts/init-bottom/overlayroot
 Copyright: 2012 Axel Heider
 License: GPL-3.0+
 
+Files: debian/*overlayroot* overlayroot/*
+Copyright: 2025 Uri Herrera <uri_herrera@nxos.org>
+License: GPL-3.0+
+
+Files: overlayroot/scripts/init-bottom/overlayroot
+Copyright: 2025 Uri Herrera <uri_herrera@nxos.org>
+License: GPL-3.0+
+
+
 License: GPL-3.0+
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by

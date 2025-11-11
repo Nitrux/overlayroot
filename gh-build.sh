@@ -1,8 +1,9 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
 set -x
 
 ### Basic Packages
+apt -qq update
 apt -qq -yy install equivs git devscripts lintian --no-install-recommends
 
 ### Install Dependencies

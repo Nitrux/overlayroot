@@ -1,6 +1,28 @@
-overlayroot (0.47nitrux1)  nitrux; urgency=medium
+nx-overlayroot (0.50.0)  nitrux; urgency=medium
 
-  * Create package.
-  * Edit overlayroot initramfs script.
+  * Rewrite and modernization of /usr/share/initramfs-tools/scripts/init-bottom/overlayroot.
+    - Removed obsolete compatibility logic for old kernels using “overlayfs”.
+    - Hardcoded overlay filesystem driver to “overlay” (modern kernel syntax only).
+    - Removed dynamic driver search (search_fs_driver) since all modern kernels support overlay natively.
+    - Simplified fstab overlay generation (overlayrootify_fstab):
+      + Dropped redundant variables and cleaned path handling.
+      + Fixed ro_opts generation when mount options are empty.
+      + Replaced “needs_workdir && …” syntax with proper conditional evaluation.
+    - Enhanced command-line parsing (write_kernel_cmdline_cfg, parse_string):
+      + Escapes values safely for shell evaluation.
+      + Added stricter validation for allowed characters.
+    - Improved logging and debugging:
+      + Consistent log levels (success, failure, warning).
+      + Ensured debug output is written to /run/initramfs/overlayroot.log.
+      + Added cleanup() trap to remove temporary directories on exit.
+    - Simplified tmpfs setup:
+      + Removed support for legacy overlayroot modes other than “tmpfs”.
+      + Added consistent tmpfs mount options (mode=0755,nodev,nosuid,noexec).
+      + Optional “size=” parameter handled via kernel cmdline (overlayroot=tmpfs:size=…).
+    - Dropped deprecated handling of “overlayfs” vs. “overlay” naming.
+    - Dropped unused functions and variables from upstream (e.g., relfile, search_fs_driver).
+    - Enforced read-only remount only if “ro” is present in kernel cmdline.
+    - Ensured /etc/fstab regeneration matches overlayroot layer structure under /media/root-{ro,rw}.
+    - General cleanup, style normalization, and shellcheck compliance.
 
- -- Uri Herrera <uri_herrera@nxos.org>  Fri, 10 Nov 2023 20:28:00 -0500
+ -- Uri Herrera <uri_herrera@nxos.org>  Tue, 11 Nov 2023 07:09:00 -0500
