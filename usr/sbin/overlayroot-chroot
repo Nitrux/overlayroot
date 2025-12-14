@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 #
 #    overlayroot-chroot - chroot wrapper script for overlayroot
 #    Copyright (C) 2012 Dustin Kirkland <kirkland@ubuntu.com>
@@ -20,12 +20,17 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 set -e
-set -f # disable path expansion
+set -f
 REMOUNTS=""
 
 error() {
     printf "ERROR: %s\n" "$*" 1>&2
 }
+
+warn() {
+    printf "WARNING: %s\n" "$*" 1>&2
+}
+
 fail() { [ $# -eq 0 ] || error "$@"; exit 1; }
 
 info() {
@@ -53,18 +58,38 @@ get_lowerdir() {
 
 # shellcheck disable=SC3043
 clean_exit() {
-    local mounts="$1" rc=0 d="" lowerdir="" mp=""
-    # shellcheck disable=SC2086
-    for d in ${mounts}; do
-        if mountpoint "${d}" >/dev/null; then
-            umount "${d}" || rc=1
-        fi
-    done
+    local rc=0 d="" mp=""
+    # We use _RET (lowerdir) directly to ensure we clean the right place
+    local lowerdir="${_RET}"
+
+    # 1. Kill any straggling processes holding the lowerdir open
+    if [ -n "$lowerdir" ]; then
+        info "Ensuring all processes in [$lowerdir] are terminated..."
+        fuser -k -m "$lowerdir" >/dev/null 2>&1 || true
+        # Give the kernel a moment to actually close the file descriptors
+        sleep 1
+    fi
+
+    # 2. Unmount standard bind mounts aggressively
+    # We do NOT rely on the passed $mounts variable. We check the disk.
+    if [ -n "$lowerdir" ]; then
+        for d in proc sys run; do
+            if mountpoint -q "${lowerdir}/${d}"; then
+                umount -l "${lowerdir}/${d}" || rc=1
+            fi
+        done
+    fi
+
+    # 3. Remount RO
+
+    sleep 1
+
     # shellcheck disable=SC2086
     for mp in $REMOUNTS; do
-        mount -o remount,ro "${mp}" ||
-            error "Note that [${mp}] is still mounted read/write"
+        mount -o remount,ro "${mp}" 2>/dev/null || \
+            warn "Note that [${mp}] is still mounted read/write"
     done
+
     [ "$2" = "return" ] && return ${rc} || exit ${rc}
 }
 

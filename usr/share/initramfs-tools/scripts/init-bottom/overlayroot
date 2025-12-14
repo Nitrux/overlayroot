@@ -207,7 +207,6 @@ overlayrootify_fstab() {
 #      sudo overlayroot-chroot
 #
 EOF
-	if needs_workdir; then need_workdir=true; else need_workdir=false; fi
 	while read -r spec file vfstype opts pass freq; do
 		[ "$file" = "/" ] && noauto="noauto" || noauto=""
 		line="$spec $file $vfstype $opts $pass $freq"

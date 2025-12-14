@@ -2,15 +2,14 @@ Source: nx-overlayroot
 Section: admin
 Priority: optional
 Maintainer: Uri Herrera <uri_herrera@nxos.org>
-Build-Depends: debhelper (>=9)
-Standards-Version: 3.9.6
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.6.2
 Homepage: http://launchpad.net/cloud-initramfs-tools
 
 
 Package: nx-overlayroot
 Architecture: all
-Depends: cryptsetup, cryptsetup-bin, initramfs-tools
-Suggests: haveged
+Depends: initramfs-tools
 Provides: overlayroot
 Description: use an overlayfs on top of a read-only root filesystem
  This package adds functionality to an initramfs built by initramfs-tools.
@@ -19,4 +18,4 @@ Description: use an overlayfs on top of a read-only root filesystem
  .
  The changes can be written to a in-memory temporary filesystem.
  .
- This a fork by Nitrux OS.
+ This a fork for Nitrux OS.
