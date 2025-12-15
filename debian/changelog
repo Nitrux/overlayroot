@@ -1,6 +1,22 @@
+nx-overlayroot (0.50.2)  nitrux; urgency=medium
+
+  * Update overlayroot-chroot:
+    - Improved user feedback:
+      + Suppressed noisy "mount point is busy" system errors.
+      + Downgraded "ERROR" to "WARNING" when read-only remount fails, as this is expected behavior with the OverlayFS driver.
+    - Added persistent audit logging:
+      + Logs user activity and commands to `<lowerdir>/var/log/overlayroot-audit.log` for permanent record.
+      + continues to log to syslog (RAM) for real-time monitoring.
+
+ -- Uri Herrera <uri_herrera@nxos.org>  Sun, 14 Dec 2025 20:41:00 -0500
+
 nx-overlayroot (0.50.1)  nitrux; urgency=medium
 
-  * Blindly check for and unmount the standard system directories.
+  * Update overlayroot-chroot:
+    - Implemented robust stateless cleanup in `clean_exit`:
+      + Aggressively kills processes holding the lower directory using `fuser -k`.
+      + Performs lazy unmounts (`umount -l`) on proc, sys, and run to prevent locks.
+      + Added sleep delays to mitigate race conditions during cleanup.
 
  -- Uri Herrera <uri_herrera@nxos.org>  Sun, 14 Dec 2025 10:25:00 -0500
 
