@@ -1,3 +1,10 @@
+nx-overlayroot (0.50.3)  nitrux; urgency=medium
+
+  * Update overlayroot-chroot:
+    - Eliminate the A && B || C pitfall by using an explicit if … then … else so the “fail” branch only runs when the mount command fails.
+
+ -- Uri Herrera <uri_herrera@nxos.org>  Sun, 28 Dec 2025 02:45:00 -0500
+
 nx-overlayroot (0.50.2)  nitrux; urgency=medium
 
   * Update overlayroot-chroot:

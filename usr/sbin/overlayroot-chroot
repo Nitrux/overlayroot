@@ -118,9 +118,11 @@ done
 
 # shellcheck disable=SC2086
 for mp in "$lowerdir" $recurse_mps; do
-    mount -o remount,rw "${mp}" &&
-        REMOUNTS="$mp $REMOUNTS" ||
+    if mount -o remount,rw "$mp"; then
+        REMOUNTS="$mp $REMOUNTS"
+    else
         fail "Unable to remount [$mp] writable"
+    fi
 done
 
 if [ -w "${lowerdir}/var/log" ]; then
